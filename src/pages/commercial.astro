@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/site/PageHero.astro';
+import EnquiryBand from '../components/site/EnquiryBand.astro';
+import Gallery from '../components/site/Gallery.astro';
+import { titles, commercial, home, local } from '../data/site';
+import { commercialPics } from '../data/extra';
+---
+<Base title={titles.commercial} description={local.descriptions.commercial} image="/images/commercial/commercial-13.jpg" crumb={commercial.title} schema={[{ '@type': 'Service', name: 'Commercial windows, doors and conservatories', serviceType: 'Commercial glazing', description: commercial.text }]}>
+  <PageHero bg={{ kind: 'photo', image: 'commercial/commercial-13', position: '50% 60%' }} crumb={commercial.title} title={commercial.title} where={local.h1.commercial} lead={commercial.text} image="commercial/commercial-10" alt={commercialPics[9].alt} service="commercial" />
+  <section class="cm section light" aria-label="Commercial project photos">
+    <div class="container">
+      <p class="statement cm__lead" data-reveal="fade">{home.about[1]}</p>
+      <p class="label cm__count" data-reveal="fade">{commercialPics.length} photos</p>
+      <Gallery pics={commercialPics} id="commercial" columns={3} />
+    </div>
+  </section>
+  <EnquiryBand />
+</Base>
+<style>
+  .cm__lead { color: var(--c-ink); max-width: 46ch; }
+  .cm__count { margin: var(--sp-7) 0 var(--sp-5); }
+  .cm :global(.gal__item .ph-img) { aspect-ratio: 4 / 3; }
+</style>

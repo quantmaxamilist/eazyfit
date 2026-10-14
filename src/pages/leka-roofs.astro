@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/site/PageHero.astro';
+import EnquiryBand from '../components/site/EnquiryBand.astro';
+import SectionHead from '../components/site/SectionHead.astro';
+import Img from '../components/site/Img.astro';
+import Icon from '../components/site/Icon.astro';
+import { titles, leka, contact, company, local } from '../data/site';
+---
+<Base title={titles.leka} description={local.descriptions.leka} image="/images/leka/leka-roof-rear.jpg" crumb="Leka Roofs" schema={[{ '@type': 'Service', name: 'LEKA Roof System installation', serviceType: 'Solid conservatory roof', description: leka.paras[2] }]}>
+  <PageHero bg={{ kind: 'video', name: 'rooftops', poster: '/images/bg/rooftops-poster.jpg' }} crumb="Leka Roofs" title={leka.title} where={local.h1.leka} lead={leka.paras[0]} image="leka/leka-roof-rear" alt={leka.images[2].alt} service="leka-roofs" />
+
+  <section class="lk section light">
+    <div class="container lk__in">
+      <p class="statement" data-reveal="fade">{leka.paras[1]}</p>
+      <div class="prose" data-reveal="fade" data-delay="0.08"><p>{leka.paras[2]}</p></div>
+    </div>
+    <div class="container">
+      <ul class="lk__pics" role="list">
+        {leka.images.map((p, i) => (
+          <li data-reveal="fade" data-delay={String(i * 0.06)}><span class="ph-img"><Img image={p.image} alt={p.alt} sizes="(max-width: 767px) 90vw, 30vw" /></span></li>
+        ))}
+      </ul>
+      <aside class="lk__call" data-reveal="fade">
+        <p class="lead">{leka.cta}</p>
+        <div class="btn-row">
+          <a class="btn" href={company.phoneHref} data-magnetic><Icon name="phone" />{company.phone}</a>
+          <a class="btn btn--ghost" href="/contact-us?service=leka-roofs">Free quote <Icon name="arrow" /></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="lc section dark" aria-labelledby="lc-h" data-cursor-theme="dark">
+    <div class="container lc__in">
+      <div>
+        <SectionHead label="Leka Platinum Installer" title={contact.certsTitle} id="lc-h" />
+        <p class="lead lc__txt" data-reveal="fade">{contact.certsText}</p>
+      </div>
+      <ul class="lc__certs" role="list">
+        {contact.certs.map((c, i) => <li data-reveal="fade" data-delay={String(i * 0.08)}><span class="ph-img"><Img image={c.image} alt={c.alt} sizes="(max-width: 767px) 90vw, 28vw" /></span></li>)}
+      </ul>
+    </div>
+  </section>
+  <EnquiryBand />
+</Base>
+<style>
+  .lk__in { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: var(--sp-8); align-items: start; }
+  .lk .statement { color: var(--c-ink); }
+  .lk__pics { margin-top: var(--sp-8); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--frame-bar); padding: var(--frame-bar); background: #fff; border-radius: 8px; box-shadow: 0 1px 0 var(--c-line), 0 40px 80px -40px rgba(71, 5, 87, 0.45); max-width: 1100px; }
+  .lk__pics .ph-img { display: block; aspect-ratio: 1; border-radius: 2px; }
+  .lk__call { margin-top: var(--sp-7); padding: var(--sp-6); border-radius: var(--radius-lg); background: var(--c-paper-2); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-6); align-items: center; }
+  .lk__call .lead { color: var(--c-ink); max-width: 60ch; }
+  .lc__in { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--sp-8); align-items: center; }
+  .lc__txt { margin-top: var(--sp-5); color: rgba(228, 242, 247, 0.82); max-width: 44ch; }
+  .lc__certs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+  .lc__certs .ph-img { display: block; aspect-ratio: 1; padding: 8px; background: #fff; border-radius: 8px; }
+  .lc__certs :global(img) { border-radius: 4px; }
+  @media (max-width: 899px) { .lk__in, .lc__in, .lk__call { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 599px) { .lk__pics { grid-template-columns: minmax(0, 1fr); } .lc__certs { grid-template-columns: minmax(0, 1fr); } }
+</style>

@@ -1,0 +1,27 @@
+---
+import { home, company } from '../../data/site';
+import Icon from '../site/Icon.astro';
+---
+<section class="wel section light" aria-labelledby="wel-h">
+  <div class="container wel__in">
+    <div>
+      <p class="label" data-reveal="fade">{company.fullName}</p>
+      <h2 id="wel-h" class="display h-2 wel__h" data-reveal="lines"><span class="line"><span>{home.welcomeTitle}</span></span></h2>
+      <div class="btn-row wel__cta" data-reveal="fade" data-delay="0.1">
+        <a class="btn" href={company.phoneHref} data-magnetic><Icon name="phone" />{home.callCta}</a>
+        <a class="btn btn--ghost" href="/our-services">{home.servicesCta} <Icon name="arrow" /></a>
+      </div>
+    </div>
+    <div class="prose wel__prose" data-reveal="fade" data-delay="0.05">
+      <p class="statement">{home.welcome[0]}</p>
+      <p>{home.welcome[1]}</p>
+    </div>
+  </div>
+</section>
+<style>
+  .wel__in { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--sp-8); align-items: start; }
+  .wel__h { margin-top: var(--sp-4); color: var(--c-purple); max-width: 12ch; }
+  .wel__cta { margin-top: var(--sp-6); }
+  .wel__prose .statement { color: var(--c-ink); margin-bottom: var(--sp-5); }
+  @media (max-width: 899px) { .wel__in { grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); } .wel__cta { order: 3; } }
+</style>

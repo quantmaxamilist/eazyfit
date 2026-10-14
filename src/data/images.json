@@ -1,0 +1,190 @@
+{
+ "home/extension-french-doors": [
+  500,
+  500
+ ],
+ "home/porch-side-door": [
+  500,
+  500
+ ],
+ "home/flats-french-doors": [
+  500,
+  500
+ ],
+ "home/cream-front-door": [
+  600,
+  700
+ ],
+ "home/dormer-windows": [
+  600,
+  700
+ ],
+ "home/victorian-conservatory": [
+  600,
+  700
+ ],
+ "services/window-fitted": [
+  500,
+  500
+ ],
+ "services/conservatory-corner": [
+  500,
+  500
+ ],
+ "services/porch-door": [
+  500,
+  500
+ ],
+ "leka/leka-roof-rooflights": [
+  500,
+  500
+ ],
+ "leka/leka-roof-red-tile": [
+  500,
+  500
+ ],
+ "leka/leka-roof-rear": [
+  500,
+  500
+ ],
+ "gallery/bay-window-inside": [
+  500,
+  500
+ ],
+ "gallery/french-doors-georgian": [
+  500,
+  500
+ ],
+ "gallery/conservatory-garden": [
+  500,
+  500
+ ],
+ "gallery/bay-window-cladding": [
+  500,
+  500
+ ],
+ "gallery/windows-scaffold": [
+  500,
+  500
+ ],
+ "gallery/grey-windows-house": [
+  500,
+  500
+ ],
+ "gallery/shopfront-inside": [
+  500,
+  500
+ ],
+ "gallery/anthracite-front-door": [
+  500,
+  500
+ ],
+ "gallery/shopfront-salon": [
+  500,
+  500
+ ],
+ "gallery/gable-windows": [
+  500,
+  500
+ ],
+ "gallery/cladding-window": [
+  500,
+  500
+ ],
+ "gallery/glazed-porch-door": [
+  500,
+  500
+ ],
+ "gallery/extension-roof-doors": [
+  500,
+  500
+ ],
+ "gallery/stained-glass-door": [
+  500,
+  500
+ ],
+ "commercial/commercial-01": [
+  768,
+  1024
+ ],
+ "commercial/commercial-02": [
+  1200,
+  1600
+ ],
+ "commercial/commercial-03": [
+  1200,
+  1600
+ ],
+ "commercial/commercial-04": [
+  1440,
+  1920
+ ],
+ "commercial/commercial-05": [
+  1440,
+  1920
+ ],
+ "commercial/commercial-06": [
+  1440,
+  1920
+ ],
+ "commercial/commercial-07": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-08": [
+  1440,
+  1920
+ ],
+ "commercial/commercial-09": [
+  768,
+  1024
+ ],
+ "commercial/commercial-10": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-11": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-12": [
+  1599,
+  1200
+ ],
+ "commercial/commercial-13": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-14": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-15": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-16": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-17": [
+  1920,
+  1440
+ ],
+ "commercial/commercial-18": [
+  1920,
+  1440
+ ],
+ "certs/leka-certificate-company": [
+  750,
+  750
+ ],
+ "certs/leka-certificate-louis": [
+  750,
+  750
+ ],
+ "brand/logo": [
+  433,
+  421
+ ]
+}

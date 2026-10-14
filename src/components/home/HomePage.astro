@@ -1,0 +1,23 @@
+---
+// The homepage. Signature moment: WowBuild (option A, chosen by the owner 2026-10-14).
+import Base from '../../layouts/Base.astro';
+import Hero from './Hero.astro';
+import Welcome from './Welcome.astro';
+import Reviews from './Reviews.astro';
+import About from './About.astro';
+import CommercialTeaser from './CommercialTeaser.astro';
+import Ticker from '../site/Ticker.astro';
+import EnquiryBand from '../site/EnquiryBand.astro';
+import WowBuild from '../wow/WowBuild.astro';
+import { titles, local } from '../../data/site';
+---
+<Base title={titles.home} description={local.descriptions.home} preloadImage="/images/home/victorian-conservatory.jpg">
+  <Hero />
+  <Ticker />
+  <Welcome />
+  <WowBuild />
+  <Reviews />
+  <CommercialTeaser />
+  <About />
+  <EnquiryBand />
+</Base>

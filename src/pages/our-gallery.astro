@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/site/PageHero.astro';
+import EnquiryBand from '../components/site/EnquiryBand.astro';
+import Gallery from '../components/site/Gallery.astro';
+import Icon from '../components/site/Icon.astro';
+import { titles, gallery, local } from '../data/site';
+import { galleryPics } from '../data/extra';
+const wall = galleryPics.slice(0, 12).map((p) => p.image);
+---
+<Base title={titles.gallery} description={local.descriptions.gallery} crumb={gallery.title} image="/images/home/victorian-conservatory.jpg">
+  <PageHero bg={{ kind: 'wall', images: wall }} crumb={gallery.title} title={gallery.title} where={local.h1.gallery} lead={gallery.intro} image="gallery/stained-glass-door" alt="Composite front door with a stained-glass panel" />
+  <section class="gl section light" aria-label="Project photos">
+    <div class="container">
+      <div class="gl__head">
+        <p class="label" data-reveal="fade">{galleryPics.length} photos</p>
+        <a class="btn btn--ghost" href="/commercial" data-reveal="fade">Commercial <Icon name="arrow" /></a>
+      </div>
+      <Gallery pics={galleryPics} id="gallery" />
+    </div>
+  </section>
+  <EnquiryBand />
+</Base>
+<style>
+  .gl__head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: var(--sp-6); }
+</style>

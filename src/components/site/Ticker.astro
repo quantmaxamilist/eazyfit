@@ -1,0 +1,29 @@
+---
+// The old site's four-point ticker, run as a CSS marquee (transform only, paused off screen by core.js).
+import { banner } from '../../data/site';
+interface Props { tone?: 'glass' | 'purple' }
+const { tone = 'glass' } = Astro.props;
+const items = banner.ticker;
+---
+<div class={`ticker ticker--${tone}`} data-ticker>
+  <p class="sr-only">{items.join(' · ')}</p>
+  <div class="ticker__track" aria-hidden="true">
+    {[0, 1, 2, 3].map(() => (
+      <ul class="ticker__set" role="list">
+        {items.map((t) => <li><i class="pane"></i>{t}</li>)}
+      </ul>
+    ))}
+  </div>
+</div>
+<style>
+  .ticker { overflow: hidden; padding-block: 1.05rem; position: relative; z-index: 2; }
+  .ticker--glass { background: var(--c-glass); color: var(--c-stage); }
+  .ticker--purple { background: var(--c-purple); color: #fff; }
+  .ticker__track { display: flex; width: max-content; animation: tick 38s linear infinite; }
+  .ticker.is-paused .ticker__track { animation-play-state: paused; }
+  .ticker__set { display: flex; flex: none; }
+  .ticker li { display: flex; align-items: center; gap: 0.9rem; padding-right: 2.6rem; font: 700 clamp(1rem, 0.9rem + 0.4vw, 1.25rem)/1 var(--ff-display); letter-spacing: -0.01em; white-space: nowrap; }
+  .pane { width: 14px; height: 14px; border: 2px solid currentColor; border-radius: 2px; background: linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat, linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat; }
+  @keyframes tick { to { transform: translate3d(-25%, 0, 0); } }
+  @media (prefers-reduced-motion: reduce) { .ticker__track { animation: none; } }
+</style>

@@ -1,0 +1,107 @@
+---
+import { company, nav } from '../../data/site';
+import Icon from './Icon.astro';
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' || path.startsWith('/wow-') : path === href);
+---
+<header class="hdr" id="hdr">
+  <div class="hdr__in container">
+    <a class="brand" href="/" aria-label="EazyFit Windows – home">
+      <img class="brand__mark" src="/images/brand/logo.png" width="433" height="421" alt="" />
+      <span class="brand__txt">
+        <span class="brand__name">EazyFit Windows</span>
+        <span class="brand__sub">Windows · Doors · Conservatories</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul role="list">
+        {nav.map((n) => (
+          <li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="hdr__cta">
+      <a class="hdr__phone" href={company.phoneHref}>
+        <Icon name="phone" /><span class="hdr__num">{company.phone}</span><span class="sr-only">Call EazyFit</span>
+      </a>
+      <a class="btn hdr__quote" href="/contact-us" data-magnetic>Free quote</a>
+      <button class="hdr__menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu" data-menu-open>
+        <Icon name="menu" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu__top container">
+    <a class="brand" href="/" aria-label="EazyFit Windows – home">
+      <img class="brand__mark" src="/images/brand/logo.png" width="433" height="421" alt="" />
+      <span class="brand__txt"><span class="brand__name">EazyFit Windows</span></span>
+    </a>
+    <button class="hdr__menu" type="button" aria-label="Close menu" data-menu-close><Icon name="close" /></button>
+  </div>
+  <nav class="menu__nav container" aria-label="Menu">
+    <ol role="list">
+      {nav.map((n, i) => (
+        <li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}><span class="menu__n">0{i + 1}</span><span class="menu__l">{n.label}</span></a></li>
+      ))}
+    </ol>
+  </nav>
+  <div class="menu__foot container">
+    <a class="btn" href={company.phoneHref}><Icon name="phone" />{company.phone}</a>
+    <a class="menu__mail" href={`mailto:${company.email}`}>{company.email}</a>
+  </div>
+</div>
+
+<style>
+  .hdr {
+    position: fixed; inset: 0 0 auto; z-index: var(--z-header); height: var(--header-h);
+    background: rgba(27, 10, 34, 0.94); color: var(--c-glass-hi);
+    border-bottom: 1px solid var(--c-line-dark);
+  }
+  .hdr__in { height: 100%; display: flex; align-items: center; gap: var(--sp-5); }
+  .brand { display: flex; align-items: center; gap: 0.75rem; flex: none; }
+  .brand__mark { width: 52px; height: 52px; object-fit: contain; }
+  .brand__txt { display: grid; line-height: 1.05; }
+  .brand__name { font: 800 1.25rem/1 var(--ff-display); letter-spacing: -0.02em; color: #fff; }
+  .brand__sub { font: 500 0.625rem/1.4 var(--ff-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-glass); margin-top: 0.3rem; }
+  .nav { margin-left: auto; }
+  .nav ul { display: flex; gap: clamp(0.9rem, 1.4vw, 1.6rem); }
+  .nav a { position: relative; font-size: 0.9375rem; font-weight: 500; padding-block: 0.5rem; color: rgba(228, 242, 247, 0.86); transition: color var(--dur-1); }
+  .nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.15rem; height: 2px; background: var(--c-glass); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-2) var(--ease-out); }
+  .nav a:hover, .nav a[aria-current='page'] { color: #fff; }
+  .nav a:hover::after, .nav a[aria-current='page']::after { transform: scaleX(1); }
+  .hdr__cta { display: flex; align-items: center; gap: 0.9rem; }
+  .hdr__phone { display: inline-flex; align-items: center; gap: 0.5rem; font: 600 1rem/1 var(--ff-text); color: #fff; height: 44px; white-space: nowrap; }
+  .hdr__phone :global(svg) { width: 18px; height: 18px; color: var(--c-glass); }
+  .hdr__quote { min-height: 44px; }
+  .hdr__menu { display: none; width: 44px; height: 44px; border-radius: 50%; place-items: center; color: #fff; box-shadow: inset 0 0 0 1.5px var(--c-line-dark); }
+  .hdr__menu :global(svg) { width: 22px; height: 22px; }
+
+  @media (max-width: 1199px) {
+    .nav { display: none; }
+    .hdr__cta { margin-left: auto; }
+    .hdr__menu { display: grid; }
+  }
+  @media (max-width: 767px) {
+    .brand__mark { width: 44px; height: 44px; }
+    .brand__name { font-size: 1.0625rem; }
+    .brand__sub { display: none; }
+    .hdr__quote, .hdr__num { display: none; }
+    .hdr__phone { width: 44px; justify-content: center; border-radius: 50%; background: var(--c-glass); }
+    .hdr__phone :global(svg) { color: var(--c-stage); }
+  }
+
+  .menu { position: fixed; inset: 0; z-index: var(--z-menu); background: var(--c-stage); color: var(--c-glass-hi); display: flex; flex-direction: column; overflow-y: auto; }
+  .menu[hidden] { display: none; }
+  .menu__top { height: var(--header-h); display: flex; align-items: center; justify-content: space-between; flex: none; }
+  .menu__top .hdr__menu { display: grid; }
+  .menu__nav { flex: 1; display: flex; align-items: center; padding-block: var(--sp-6); }
+  .menu__nav ol { width: 100%; }
+  .menu__nav a { display: flex; align-items: baseline; gap: 1rem; padding-block: 0.55rem; border-bottom: 1px solid var(--c-line-dark); }
+  .menu__n { font: 500 var(--fs-label) var(--ff-mono); color: var(--c-glass); width: 2ch; }
+  .menu__l { font: 800 clamp(1.75rem, 7vw, 2.75rem)/1.1 var(--ff-display); letter-spacing: -0.02em; color: #fff; }
+  .menu__nav a[aria-current='page'] .menu__l { color: var(--c-glass); }
+  .menu__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; padding-block: var(--sp-6) calc(var(--sp-6) + env(safe-area-inset-bottom)); }
+  .menu__mail { color: var(--c-glass); font-size: var(--fs-small); text-decoration: underline; text-underline-offset: 3px; }
+</style>

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/site/Icon.astro';
+import { company, nav } from '../data/site';
+---
+<Base title="Page not found – Eazy Fit Windows and Doors" description="This page could not be found." noindex>
+  <section class="nf dark" data-cursor-theme="dark">
+    <div class="container nf__in">
+      <p class="label">404</p>
+      <h1 class="display h-hero nf__h">Page not found</h1>
+      <div class="btn-row">
+        <a class="btn" href="/">Welcome <Icon name="arrow" /></a>
+        <a class="btn btn--ghost" href={company.phoneHref}><Icon name="phone" />{company.phone}</a>
+      </div>
+      <ul class="nf__nav" role="list">{nav.slice(1).map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf { min-height: 80svh; display: flex; align-items: center; padding: calc(var(--header-h) + 4rem) 0 4rem; }
+  .nf__h { margin: var(--sp-4) 0 var(--sp-6); color: #fff; }
+  .nf__nav { margin-top: var(--sp-7); display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .nf__nav a { color: var(--c-glass); text-decoration: underline; text-underline-offset: 3px; }
+</style>

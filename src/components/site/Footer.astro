@@ -1,0 +1,51 @@
+---
+import { company, nav, home, local } from '../../data/site';
+import Icon from './Icon.astro';
+const year = new Date().getFullYear();
+---
+<footer class="ftr dark" data-cursor-theme="dark">
+  <div class="container ftr__in">
+    <div class="ftr__brand">
+      <img src="/images/brand/logo.png" width="433" height="421" alt="EazyFit Windows – Windows, Doors, Conservatories" loading="lazy" />
+      <p class="ftr__name">{company.name}</p>
+      <p class="ftr__based"><Icon name="pin" />{company.based}, {local.region}</p>
+    </div>
+    <nav class="ftr__nav" aria-label="Footer">
+      <p class="label">Pages</p>
+      <ul role="list">{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
+    </nav>
+    <div class="ftr__contact">
+      <p class="label">Contact</p>
+      <a class="ftr__big" href={company.phoneHref}>Tel : {company.phone}</a>
+      <a class="ftr__mail" href={`mailto:${company.email}`}>Email: {company.email}</a>
+      <p class="ftr__areas"><span>Areas we cover:</span> {home.areas.join(' · ')}</p>
+    </div>
+  </div>
+  <div class="container ftr__base">
+    <span>© {year} {company.legalName}</span>
+    <a href={company.privacyPdf} data-no-transition target="_blank" rel="noopener">Privacy Policy</a>
+  </div>
+</footer>
+
+<style>
+  .ftr { padding-top: var(--sp-9); padding-bottom: calc(var(--sp-6) + var(--dock-h, 0px)); border-top: 1px solid var(--c-line-dark); }
+  .ftr__in { display: grid; grid-template-columns: 1.2fr 0.8fr 1.4fr; gap: var(--sp-7); }
+  .ftr__brand img { width: 96px; height: 96px; object-fit: contain; }
+  .ftr__name { font: 800 var(--fs-display-3)/1 var(--ff-display); letter-spacing: -0.02em; color: #fff; margin-top: var(--sp-5); }
+  .ftr__based { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: var(--sp-3); color: var(--c-glass); }
+  .ftr__based :global(svg) { width: 18px; height: 18px; }
+  .ftr__nav ul { margin-top: var(--sp-4); display: grid; gap: 0.35rem; }
+  .ftr__nav a { color: rgba(228, 242, 247, 0.82); transition: color var(--dur-1); }
+  .ftr__nav a:hover { color: #fff; }
+  .ftr__contact { display: grid; align-content: start; gap: var(--sp-3); }
+  .ftr__contact .label { margin-bottom: var(--sp-2); }
+  .ftr__big { font: 800 var(--fs-display-3)/1.1 var(--ff-display); letter-spacing: -0.02em; color: #fff; }
+  .ftr__big:hover { color: var(--c-glass); }
+  .ftr__mail { color: var(--c-glass); overflow-wrap: anywhere; }
+  .ftr__areas { color: rgba(228, 242, 247, 0.6); font-size: var(--fs-small); }
+  .ftr__base { margin-top: var(--sp-9); padding-top: var(--sp-5); border-top: 1px solid var(--c-line-dark); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font: 400 0.8125rem/1.4 var(--ff-mono); color: rgba(228, 242, 247, 0.6); }
+  .ftr__base a { text-decoration: underline; text-underline-offset: 3px; }
+  .ftr__base a:hover { color: #fff; }
+  @media (max-width: 899px) { .ftr__in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .ftr__contact { grid-column: 1 / -1; } }
+  @media (max-width: 479px) { .ftr__in { grid-template-columns: minmax(0, 1fr); } }
+</style>

@@ -1,0 +1,48 @@
+---
+import { home, contact } from '../../data/site';
+import Img from '../site/Img.astro';
+import Icon from '../site/Icon.astro';
+---
+<section class="ab section light" aria-labelledby="ab-h">
+  <div class="container ab__in">
+    <div class="ab__copy">
+      <p class="label" data-reveal="fade">Bognor Regis · Sussex · Hampshire</p>
+      <h2 id="ab-h" class="display h-2 ab__h" data-reveal="lines"><span class="line"><span>{home.aboutTitle}</span></span></h2>
+      <div class="prose ab__prose" data-reveal="fade">
+        {home.about.map((p) => <p>{p}</p>)}
+      </div>
+      <h3 class="ab__areash" data-reveal="fade">Areas we cover</h3>
+      <ul class="ab__areas" role="list" data-reveal="fade">
+        {home.areas.map((a) => <li><Icon name="pin" />{a}</li>)}
+      </ul>
+    </div>
+    <a class="ab__cert" href="/leka-roofs" data-reveal="fade" data-delay="0.1">
+      <span class="ab__certimg ph-img"><Img image={contact.certs[0].image} alt={contact.certs[0].alt} sizes="(max-width: 899px) 90vw, 30vw" /></span>
+      <span class="ab__certcap">
+        <span class="label">{contact.certsTitle}</span>
+        <span class="ab__certtxt">{contact.certsText}</span>
+        <span class="ab__certlink">Leka Roofs <Icon name="arrow" /></span>
+      </span>
+    </a>
+  </div>
+</section>
+<style>
+  .ab__in { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: var(--sp-8); align-items: start; }
+  .ab__h { margin-top: var(--sp-4); color: var(--c-purple); }
+  .ab__prose { margin-top: var(--sp-6); max-width: 62ch; }
+  .ab__areash { margin-top: var(--sp-6); font: 700 1.125rem/1.2 var(--ff-display); color: var(--c-ink); }
+  .ab__areas { margin-top: var(--sp-4); display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ab__areas li { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.85rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--c-line); font-size: var(--fs-small); font-weight: 500; }
+  .ab__areas :global(svg) { width: 15px; height: 15px; color: var(--c-purple); }
+  .ab__cert { position: sticky; top: calc(var(--header-h) + 24px); display: grid; background: var(--c-stage); color: var(--c-glass-hi); border-radius: var(--radius-lg); overflow: hidden; transition: transform var(--dur-2) var(--ease-out); }
+  .ab__cert:hover { transform: translateY(-4px); }
+  .ab__certimg { aspect-ratio: 1; padding: 10px; background: #fff; }
+  .ab__certimg :global(img) { border-radius: 4px; }
+  .ab__certcap { display: grid; gap: var(--sp-3); padding: var(--sp-6); }
+  .ab__certcap .label { color: var(--c-glass); }
+  .ab__certtxt { font-size: var(--fs-small); color: rgba(228, 242, 247, 0.85); }
+  .ab__certlink { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; color: #fff; }
+  .ab__certlink :global(svg) { width: 18px; height: 18px; transition: transform var(--dur-2) var(--ease-out); }
+  .ab__cert:hover .ab__certlink :global(svg) { transform: translateX(4px); }
+  @media (max-width: 899px) { .ab__in { grid-template-columns: minmax(0, 1fr); } .ab__cert { position: relative; top: 0; max-width: 440px; } }
+</style>

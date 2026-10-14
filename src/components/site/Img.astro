@@ -1,0 +1,21 @@
+---
+// One image helper: real pixel size from images.json, a 960w variant for large masters, lazy by default.
+import { size } from '../../data/extra';
+interface Props { image: string; alt: string; class?: string; sizes?: string; eager?: boolean }
+const { image, alt, class: cls, sizes = '(max-width: 767px) 100vw, 50vw', eager = false } = Astro.props;
+const [w, h] = size(image);
+const big = w > 1000;
+const srcset = big ? `/images/${image}-960.jpg 960w, /images/${image}.jpg ${w}w` : undefined;
+---
+<img
+  class={cls}
+  src={`/images/${image}.jpg`}
+  srcset={srcset}
+  sizes={big ? sizes : undefined}
+  width={w}
+  height={h}
+  alt={alt}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+  fetchpriority={eager ? 'high' : undefined}
+/>

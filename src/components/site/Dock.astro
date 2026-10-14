@@ -1,0 +1,23 @@
+---
+// Phone-width call + quote bar, always on screen so the number is never more than a thumb away.
+import { company } from '../../data/site';
+import Icon from './Icon.astro';
+---
+<div class="dock" aria-label="Quick contact">
+  <a class="dock__call" href={company.phoneHref}><Icon name="phone" />Call {company.phone}</a>
+  <a class="dock__quote" href="/contact-us">Free quote</a>
+</div>
+<style>
+  .dock { display: none; }
+  @media (max-width: 767px) {
+    :global(:root) { --dock-h: calc(64px + env(safe-area-inset-bottom)); }
+    .dock {
+      position: fixed; inset: auto 0 0; z-index: var(--z-dock); display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px;
+      padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); background: rgba(27, 10, 34, 0.96); border-top: 1px solid var(--c-line-dark);
+    }
+    .dock a { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 999px; font-weight: 600; font-size: 0.9375rem; white-space: nowrap; }
+    .dock__call { background: var(--c-glass); color: var(--c-stage); }
+    .dock__call :global(svg) { width: 18px; height: 18px; }
+    .dock__quote { color: #fff; box-shadow: inset 0 0 0 1.5px rgba(228, 242, 247, 0.5); }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+// The nine Google reviews from the old homepage widget, verbatim. Horizontal row: native scroll on touch,
+// drag + arrows on desktop. Cards never resize.
+import { reviews } from '../../data/site';
+import Icon from '../site/Icon.astro';
+---
+<section class="rv section light" id="reviews" aria-labelledby="rv-h">
+  <div class="container rv__head">
+    <div>
+      <p class="label" data-reveal="fade">Posted on Google</p>
+      <h2 id="rv-h" class="display h-2 rv__h" data-reveal="lines"><span class="line"><span>{reviews.length} five-star reviews</span></span></h2>
+    </div>
+    <div class="rv__nav" data-reveal="fade">
+      <button class="rv__btn" type="button" data-rv-prev aria-label="Previous reviews"><Icon name="chev" /></button>
+      <button class="rv__btn" type="button" data-rv-next aria-label="Next reviews"><Icon name="chev" /></button>
+    </div>
+  </div>
+  <div class="rv__rail" data-rv-rail tabindex="0" aria-label="Google reviews">
+    <ul class="rv__list" role="list">
+      {reviews.map((r) => (
+        <li class="rv__card">
+          <div class="rv__top">
+            <span class="rv__stars" aria-label="5 out of 5 stars">{[1, 2, 3, 4, 5].map(() => <Icon name="star" />)}</span>
+            <Icon name="google" class="rv__g" />
+          </div>
+          <blockquote class="rv__q"><p>{r.text}</p></blockquote>
+          <p class="rv__name"><span class="rv__av" aria-hidden="true">{r.name[0]}</span>{r.name}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .rv { background: var(--c-paper-2); overflow: hidden; }
+  .rv__head { display: flex; justify-content: space-between; align-items: end; gap: var(--sp-5); }
+  .rv__h { margin-top: var(--sp-4); color: var(--c-purple); }
+  .rv__nav { display: flex; gap: 0.5rem; }
+  .rv__btn { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: var(--c-purple); box-shadow: inset 0 0 0 1.5px currentColor; transition: background-color var(--dur-2), color var(--dur-2); }
+  .rv__btn:hover { background: var(--c-purple); color: #fff; }
+  .rv__btn :global(svg) { width: 22px; height: 22px; }
+  .rv__btn:first-child :global(svg) { transform: scaleX(-1); }
+  .rv__rail { margin-top: var(--sp-7); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; cursor: grab; }
+  .rv__rail::-webkit-scrollbar { display: none; }
+  .rv__rail.is-drag { cursor: grabbing; scroll-snap-type: none; }
+  .rv__list { display: flex; gap: clamp(12px, 1.4vw, 20px); padding-inline: max(var(--gutter), calc((100vw - var(--container)) / 2)); width: max-content; }
+  .rv__card { scroll-snap-align: start; scroll-margin-left: max(var(--gutter), calc((100vw - var(--container)) / 2)); width: clamp(280px, 80vw, 380px); min-height: 300px; display: flex; flex-direction: column; gap: var(--sp-4); padding: var(--sp-6); background: #fff; border-radius: var(--radius); box-shadow: 0 1px 0 var(--c-line), 0 20px 40px -30px rgba(71, 5, 87, 0.4); user-select: none; }
+  .rv__top { display: flex; justify-content: space-between; align-items: center; }
+  .rv__stars { display: inline-flex; gap: 2px; color: var(--c-star); }
+  .rv__stars :global(svg) { width: 18px; height: 18px; }
+  .rv__card :global(.rv__g) { width: 22px; height: 22px; }
+  .rv__q { flex: 1; color: var(--c-ink-2); font-size: var(--fs-small); line-height: 1.6; }
+  .rv__name { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; color: var(--c-ink); }
+  .rv__av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--c-purple); color: #fff; font: 700 0.875rem var(--ff-display); }
+  @media (max-width: 767px) { .rv__nav { display: none; } }
+</style>
+<script>
+  const rail = document.querySelector<HTMLElement>('[data-rv-rail]');
+  if (rail) {
+    const step = () => (rail.querySelector('.rv__card') as HTMLElement).offsetWidth + 20;
+    document.querySelector('[data-rv-prev]')?.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+    document.querySelector('[data-rv-next]')?.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+    // mouse drag (touch uses native scrolling)
+    let down = false, sx = 0, sl = 0, moved = false;
+    rail.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = rail.scrollLeft; });
+    addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) { moved = true; rail.classList.add('is-drag'); }
+      rail.scrollLeft = sl - dx;
+    });
+    addEventListener('pointerup', () => { if (!down) return; down = false; rail.classList.remove('is-drag'); });
+    rail.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+    rail.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) e.stopPropagation(); }, { passive: true });
+  }
+</script>

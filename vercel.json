@@ -1,0 +1,96 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/conservatories",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/conservatories/",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/conservatories-2",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/conservatories-2/",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/windows-and-doors",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/windows-and-doors/",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/windows-doors",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/windows-doors/",
+      "destination": "/our-services",
+      "permanent": true
+    },
+    {
+      "source": "/leka-windows",
+      "destination": "/leka-roofs",
+      "permanent": true
+    },
+    {
+      "source": "/leka-windows/",
+      "destination": "/leka-roofs",
+      "permanent": true
+    },
+    {
+      "source": "/leka-system",
+      "destination": "/leka-roofs",
+      "permanent": true
+    },
+    {
+      "source": "/leka-system/",
+      "destination": "/leka-roofs",
+      "permanent": true
+    },
+    {
+      "source": "/recent-projects",
+      "destination": "/our-gallery",
+      "permanent": true
+    },
+    {
+      "source": "/recent-projects/",
+      "destination": "/our-gallery",
+      "permanent": true
+    },
+    {
+      "source": "/commercial-work",
+      "destination": "/commercial",
+      "permanent": true
+    },
+    {
+      "source": "/commercial-work/",
+      "destination": "/commercial",
+      "permanent": true
+    },
+    {
+      "source": "/elementor-319",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/elementor-319/",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
+}

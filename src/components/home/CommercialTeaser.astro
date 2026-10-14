@@ -1,0 +1,33 @@
+---
+import { commercial } from '../../data/site';
+import { commercialPics } from '../../data/extra';
+import Img from '../site/Img.astro';
+import Icon from '../site/Icon.astro';
+const lead = commercial.text.split('. ')[0] + '.';
+const strip = [12, 5, 13, 6].map((i) => commercialPics[i]);
+---
+<section class="ct section dark" aria-labelledby="ct-h" data-cursor-theme="dark">
+  <div class="container ct__in">
+    <div class="ct__copy">
+      <p class="label" data-reveal="fade">{commercial.title}</p>
+      <h2 id="ct-h" class="statement ct__h" data-reveal="fade">{lead}</h2>
+      <a class="btn" href="/commercial" data-reveal="fade" data-delay="0.1">{commercial.title} <Icon name="arrow" /></a>
+    </div>
+    <ul class="ct__strip" role="list">
+      {strip.map((p, i) => (
+        <li class={`ct__ph ct__ph--${i}`} data-reveal="fade" data-delay={String(i * 0.06)}>
+          <span class="ph-img"><Img image={p.image} alt={p.alt} sizes="(max-width: 899px) 50vw, 28vw" /></span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .ct { overflow: hidden; }
+  .ct__in { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--sp-8); align-items: center; }
+  .ct__h { margin-top: var(--sp-4); color: #fff; }
+  .ct__copy .btn { margin-top: var(--sp-6); }
+  .ct__strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--frame-bar); padding: var(--frame-bar); background: var(--c-frame); border-radius: 8px; }
+  .ct__ph .ph-img { display: block; aspect-ratio: 4 / 3; border-radius: 2px; }
+  @media (max-width: 899px) { .ct__in { grid-template-columns: minmax(0, 1fr); } }
+</style>

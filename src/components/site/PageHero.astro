@@ -1,0 +1,49 @@
+---
+// Inner-page hero: compact dark stage, one framed photo (the window motif), phone + quote on every page.
+import { company } from '../../data/site';
+import Icon from './Icon.astro';
+import Img from './Img.astro';
+import Ticker from './Ticker.astro';
+import HeroBg from './HeroBg.astro';
+interface Props { crumb: string; title: string; where?: string; lead?: string; image?: string; alt?: string; service?: string; bg?: any; place?: string }
+const { crumb, title, where, lead, image, alt = '', service, bg, place } = Astro.props;
+const quote = service ? `/contact-us?service=${service}` : '/contact-us';
+---
+<section class="ph dark" data-cursor-theme="dark">
+  {bg && <HeroBg bg={bg} place={place} />}
+  <div class="container ph__in">
+    <div class="ph__copy">
+      <p class="label" data-reveal="fade"><a href="/">EazyFit Windows</a><span aria-hidden="true">/</span>{crumb}</p>
+      <h1 class="display h-hero" data-reveal="lines"><span class="line"><span>{title}</span></span>{where && <span class="line ph__where"><span>{where}</span></span>}</h1>
+      {lead && <p class="lead ph__lead" data-reveal="fade" data-delay="0.08">{lead}</p>}
+      <div class="btn-row" data-reveal="fade" data-delay="0.14">
+        <a class="btn" href={company.phoneHref} data-magnetic><Icon name="phone" />{company.phone}</a>
+        <a class="btn btn--ghost" href={quote}>Free quote <Icon name="arrow" /></a>
+      </div>
+    </div>
+    {image && (
+      <figure class="ph__frame" data-reveal="fade" data-delay="0.1">
+        <div class="ph-img"><Img image={image} alt={alt} eager sizes="(max-width: 899px) 100vw, 40vw" /></div>
+      </figure>
+    )}
+  </div>
+</section>
+<Ticker />
+<style>
+  .ph { padding-top: calc(var(--header-h) + clamp(2.5rem, 2rem + 4vw, 6rem)); padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); position: relative; overflow: hidden; }
+  .ph::before { content: ''; position: absolute; inset: 0; background: radial-gradient(70% 90% at 85% 10%, rgba(123, 90, 144, 0.35), transparent 70%); pointer-events: none; }
+  .ph__in { position: relative; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: var(--sp-8); align-items: center; }
+  .ph .label a:hover { color: #fff; }
+  .ph .label span { opacity: 0.5; }
+  .ph h1 { margin-top: var(--sp-5); color: #fff; max-width: 18ch; }
+  .ph__where { font-size: var(--fs-statement); font-weight: 600; letter-spacing: -0.01em; color: var(--c-glass); margin-top: 0.35em; }
+  .ph__lead { margin-top: var(--sp-5); color: rgba(228, 242, 247, 0.82); max-width: 54ch; }
+  .ph .btn-row { margin-top: var(--sp-6); }
+  .ph__frame { padding: var(--frame-bar); background: var(--c-frame); border-radius: 6px; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6); max-width: 440px; justify-self: end; width: 100%; }
+  .ph__frame .ph-img { aspect-ratio: 4 / 5; border-radius: 2px; }
+  @media (max-width: 899px) {
+    .ph__in { grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); }
+    .ph__frame { justify-self: start; max-width: 360px; }
+    .ph__frame .ph-img { aspect-ratio: 4 / 3; }
+  }
+</style>

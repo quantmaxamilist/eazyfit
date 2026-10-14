@@ -1,0 +1,13 @@
+---
+interface Props { label: string; title: string; id?: string; tag?: 'h2' | 'h3' }
+const { label, title, id, tag: Tag = 'h2' } = Astro.props;
+---
+<header class="sh">
+  <p class="label" data-reveal="fade">{label}</p>
+  <Tag id={id} class="display h-2 sh__h" data-reveal="lines"><span class="line"><span>{title}</span></span></Tag>
+</header>
+<style>
+  .sh__h { margin-top: var(--sp-4); }
+  :global(.light) .sh__h { color: var(--c-purple); }
+  :global(.dark) .sh__h { color: #fff; }
+</style>

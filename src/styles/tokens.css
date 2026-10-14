@@ -1,0 +1,69 @@
+/* EazyFit design tokens. Colours sampled from the logo file (deep purple #53265C, glass #C2E0EB)
+   and the old Elementor stylesheet (site purple #470557). */
+:root {
+  /* brand */
+  --c-purple: #470557;        /* old site's brand purple (Elementor global colour) */
+  --c-purple-logo: #53265c;   /* logo ring + globe */
+  --c-violet: #7b5a90;        /* logo mid-tone, used for hairlines on dark */
+  --c-glass: #c2e0eb;         /* logo glazing tint */
+  --c-glass-hi: #e4f2f7;
+  --c-frame: #ffffff;         /* uPVC white */
+
+  /* stage + neutrals */
+  --c-stage: #1b0a22;         /* deep plum stage (brand purple, dark) */
+  --c-stage-2: #26102f;
+  --c-stage-3: #33173d;
+  --c-paper: #f5f3f7;         /* light neutral with a whisper of the brand */
+  --c-paper-2: #ebe6ef;
+  --c-ink: #1b0e20;
+  --c-ink-2: #4a3d50;
+  --c-ink-3: #6d6273;         /* 5.3:1 on paper */
+  --c-line: rgba(27, 14, 32, 0.14);
+  --c-line-dark: rgba(228, 242, 247, 0.16);
+  --c-star: #f5b301;
+
+  /* type */
+  --ff-display: 'Bricolage Grotesque Variable', 'Arial Black', system-ui, sans-serif;
+  --ff-text: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ff-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --fs-hero: clamp(2.125rem, 4.4vw, 5.75rem);
+  --fs-display-1: clamp(2.5rem, 1rem + 5.6vw, 7.5rem);
+  --fs-display-2: clamp(1.875rem, 0.6rem + 3.4vw, 4.25rem);
+  --fs-display-3: clamp(1.375rem, 0.7rem + 1.9vw, 2.75rem);
+  --fs-statement: clamp(1.25rem, 0.9rem + 1.3vw, 2.125rem);
+  --fs-lead: clamp(1.0625rem, 0.98rem + 0.35vw, 1.3125rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-label: 0.75rem;
+
+  --lh-tight: 1.02;
+  --lh-head: 1.08;
+  --lh-body: 1.6;
+  --ls-display: -0.025em;
+  --ls-label: 0.12em;
+
+  /* space + layout */
+  --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem; --sp-5: 1.5rem;
+  --sp-6: 2rem; --sp-7: 3rem; --sp-8: 4rem; --sp-9: 6rem; --sp-10: 8rem;
+  --section-y: clamp(4.5rem, 3rem + 6vw, 9rem);
+  --container: 1320px;
+  --gutter: clamp(1rem, 0.5rem + 2.4vw, 3rem);
+  --radius: 14px;
+  --radius-lg: 22px;
+  --frame-bar: clamp(8px, 0.5rem + 0.4vw, 14px);   /* glazing bar width in the window motifs */
+  --header-h: 76px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 0.18s; --dur-2: 0.32s; --dur-3: 0.6s;
+
+  /* layers */
+  --z-base: 1; --z-raised: 10; --z-dock: 60; --z-header: 80; --z-menu: 90; --z-lightbox: 100;
+  --z-cursor: 110; --z-pt: 120;
+}
+
+@media (max-width: 767px) {
+  :root { --header-h: 64px; --fs-body: 1rem; }
+}

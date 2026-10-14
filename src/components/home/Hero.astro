@@ -1,0 +1,89 @@
+---
+// Homepage hero: the client's own jobs set as panes in a white uPVC window frame.
+import { banner, company, reviews } from '../../data/site';
+import { heroPanes } from '../../data/extra';
+import Icon from '../site/Icon.astro';
+import Img from '../site/Img.astro';
+import HeroBg from '../site/HeroBg.astro';
+---
+<section class="hero dark" data-cursor-theme="dark" data-hero>
+  <HeroBg bg={{ kind: 'video', name: 'chichester', poster: '/images/home/chichester-poster.jpg' }} place="Chichester, West Sussex" strength="home" />
+  <div class="container hero__in">
+    <div class="hero__copy">
+      <p class="label" data-hero-item>{banner.name} · {company.based}</p>
+      <h1 class="display h-hero hero__h" data-hero-item>{banner.headline}</h1>
+      <div class="btn-row hero__cta" data-hero-item>
+        <a class="btn" href={company.phoneHref} data-magnetic><Icon name="phone" />Call The Team</a>
+        <a class="btn btn--ghost" href="/contact-us">{banner.ticker[1]} <Icon name="arrow" /></a>
+      </div>
+      <a class="hero__proof" href="#reviews" data-hero-item>
+        <span class="hero__stars" aria-hidden="true">{[1, 2, 3, 4, 5].map(() => <Icon name="star" />)}</span>
+        <span>{reviews.length} five-star Google reviews</span>
+      </a>
+    </div>
+    <div class="win" data-win aria-label="Recent EazyFit installations" role="group">
+      <div class="win__frame">
+        {heroPanes.map((p, i) => (
+          <div class="win__pane" data-pane style={`--i:${i}`}>
+            <div class="win__photo"><Img image={p.image} alt={p.alt} eager={i < 3} sizes="(max-width: 899px) 33vw, 16vw" /></div>
+            <i class="win__sheen" aria-hidden="true"></i>
+          </div>
+        ))}
+      </div>
+      <div class="win__sill" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding-top: calc(var(--header-h) + clamp(2rem, 1rem + 4vw, 5rem)); padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); min-height: min(100svh, 980px); display: flex; align-items: center; }
+  .hero::before { content: ''; position: absolute; inset: 0; background:
+    radial-gradient(60% 70% at 80% 40%, rgba(123, 90, 144, 0.42), transparent 70%),
+    radial-gradient(50% 60% at 10% 100%, rgba(71, 5, 87, 0.55), transparent 70%); pointer-events: none; }
+  .hero__in { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: center; width: 100%; }
+  .hero__h { margin-top: var(--sp-5); color: #fff; max-width: 19ch; font-size: clamp(2rem, 1rem + 3.3vw, 4.5rem); }
+  .hero__cta { margin-top: var(--sp-6); }
+  .hero__proof { margin-top: var(--sp-6); display: inline-flex; align-items: center; gap: 0.75rem; font-size: var(--fs-small); color: rgba(228, 242, 247, 0.85); }
+  .hero__proof:hover span:last-child { text-decoration: underline; text-underline-offset: 3px; }
+  .hero__stars { display: inline-flex; gap: 2px; color: var(--c-star); }
+  .hero__stars :global(svg) { width: 16px; height: 16px; }
+
+  /* the window */
+  .win { position: relative; justify-self: end; width: 100%; max-width: 620px; }
+  .win__frame {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--frame-bar);
+    padding: calc(var(--frame-bar) * 1.6); background: var(--c-frame); border-radius: 8px;
+    box-shadow: inset 0 0 0 1px rgba(27, 14, 32, 0.08), 0 50px 120px -40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+  .win__pane { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 2px; background: var(--c-glass); box-shadow: inset 0 0 0 1px rgba(27, 14, 32, 0.12); }
+  .win__photo { position: absolute; inset: 0; }
+  .win__photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .win__sheen { position: absolute; inset: -20% -60%; background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.28) 48%, rgba(255, 255, 255, 0.06) 54%, transparent 60%); transform: translateX(-60%); pointer-events: none; }
+  .win__sill { height: calc(var(--frame-bar) * 1.4); margin: 0 calc(var(--frame-bar) * -1.2); background: #eef3f6; border-radius: 0 0 6px 6px; box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.6); }
+
+  @media (max-width: 899px) {
+    .hero { min-height: 0; }
+    .hero__in { grid-template-columns: minmax(0, 1fr); }
+    .win { justify-self: stretch; max-width: 520px; }
+    .win__pane { aspect-ratio: 1; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { arrived, reduced } from '../../scripts/core.js';
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (hero && !reduced) {
+    const items = hero.querySelectorAll('[data-hero-item]');
+    const panes = hero.querySelectorAll('[data-pane] .win__photo');
+    const sheens = hero.querySelectorAll('[data-pane] .win__sheen');
+    gsap.set(items, { opacity: 0, y: 20 });
+    gsap.set(panes, { yPercent: 104 });
+    arrived.then(() => {
+      gsap.timeline()
+        .to(items, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.07 })
+        .to(panes, { yPercent: 0, duration: 0.9, ease: 'expo.out', stagger: { each: 0.06, from: 'start' } }, 0.1)
+        .to(sheens, { xPercent: 120, duration: 1.1, ease: 'power2.inOut', stagger: 0.06 }, 0.5);
+    });
+  }
+</script>

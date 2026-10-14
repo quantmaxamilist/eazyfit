@@ -1,0 +1,143 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/site/Img.astro';
+import Icon from '../components/site/Icon.astro';
+import Ticker from '../components/site/Ticker.astro';
+import HeroBg from '../components/site/HeroBg.astro';
+import { titles, company, contact, banner, local } from '../data/site';
+import { quoteOptions } from '../data/extra';
+---
+<Base title={titles.contact} description={local.descriptions.contact} crumb="Contact Us">
+  <section class="cu dark" data-cursor-theme="dark" aria-labelledby="cu-h">
+    <HeroBg bg={{ kind: 'video', name: 'chichester', poster: '/images/bg/chichester-poster-2.jpg', start: 5, position: '30% 50%' }} place="Chichester, West Sussex" />
+    <div class="container cu__in">
+      <div class="cu__details">
+        <p class="label" data-reveal="fade"><a href="/">EazyFit Windows</a> <span aria-hidden="true">/</span> Contact Us</p>
+        <h1 id="cu-h" class="display h-hero cu__h" data-reveal="lines"><span class="line"><span>Contact Us</span></span><span class="line cu__where"><span>{local.h1.contact}</span></span></h1>
+        <h2 class="label cu__sub" data-reveal="fade">{contact.detailsTitle}</h2>
+        <ul class="cu__list" role="list" data-reveal="fade" data-delay="0.06">
+          <li><a class="cu__big" href={company.phoneHref}><Icon name="phone" /><span>{company.phone}</span></a></li>
+          <li><a class="cu__mail" href={`mailto:${company.email}`}><Icon name="mail" /><span>{company.email}</span></a></li>
+          <li class="cu__based"><Icon name="pin" /><span>{company.based}</span></li>
+        </ul>
+        <ul class="cu__ticks" role="list" data-reveal="fade" data-delay="0.1">
+          {banner.ticker.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+
+      <form class="qf light" id="quote" data-quote-form novalidate data-reveal="fade" data-delay="0.08" aria-labelledby="qf-h">
+        <h2 id="qf-h" class="display h-3 qf__h">{banner.ticker[1]}</h2>
+        <fieldset class="qf__set">
+          <legend class="qf__legend">What do you need?</legend>
+          <div class="qf__opts">
+            {quoteOptions.map((o) => (
+              <label class="qf__chip"><input type="checkbox" name="service" value={o.label} data-slug={o.slug} /><span>{o.label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="qf__grid">
+          <label class="qf__field"><span>Name</span><input name="name" autocomplete="name" required /></label>
+          <label class="qf__field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" required /></label>
+          <label class="qf__field qf__field--wide"><span>Email</span><input name="email" type="email" autocomplete="email" /></label>
+          <label class="qf__field qf__field--wide"><span>Your project</span><textarea name="message" rows="4"></textarea></label>
+        </div>
+        <p class="qf__err" role="alert" hidden>Please add your name and a phone number so the team can call you back.</p>
+        <button class="btn qf__send" type="submit">Send enquiry <Icon name="arrow" /></button>
+        <p class="qf__note">Or call <a href={company.phoneHref}>{company.phone}</a></p>
+      </form>
+    </div>
+  </section>
+  <Ticker />
+
+  <section class="cc section light" aria-labelledby="cc-h">
+    <div class="container cc__in">
+      <div>
+        <p class="label" data-reveal="fade">Leka Platinum Installer</p>
+        <h2 id="cc-h" class="display h-2 cc__h" data-reveal="lines"><span class="line"><span>{contact.certsTitle}</span></span></h2>
+        <p class="lead cc__txt" data-reveal="fade">{contact.certsText}</p>
+        <a class="btn btn--ghost" href="/leka-roofs" data-reveal="fade">Leka Roofs <Icon name="arrow" /></a>
+      </div>
+      <ul class="cc__certs" role="list">
+        {contact.certs.map((c, i) => <li data-reveal="fade" data-delay={String(i * 0.08)}><span class="ph-img"><Img image={c.image} alt={c.alt} sizes="(max-width: 767px) 90vw, 28vw" /></span></li>)}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cu { padding-top: calc(var(--header-h) + clamp(2.5rem, 2rem + 4vw, 5rem)); padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); position: relative; overflow: hidden; }
+  .cu::before { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 80% at 15% 20%, rgba(123, 90, 144, 0.35), transparent 70%); pointer-events: none; }
+  .cu__in { position: relative; display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: var(--sp-8); align-items: start; }
+  .cu .label a:hover { color: #fff; }
+  .cu__h { margin-top: var(--sp-5); color: #fff; }
+  .cu__where { font-size: var(--fs-statement); font-weight: 600; letter-spacing: -0.01em; color: var(--c-glass); margin-top: 0.35em; }
+  .cu__sub { margin-top: var(--sp-7); }
+  .cu__list { margin-top: var(--sp-4); display: grid; gap: var(--sp-4); }
+  .cu__list li, .cu__list a { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+  .cu__list :global(svg) { width: 22px; height: 22px; color: var(--c-glass); flex: none; }
+  .cu__big { font: 800 var(--fs-display-3)/1.05 var(--ff-display); letter-spacing: -0.02em; color: #fff; }
+  .cu__big:hover span, .cu__mail:hover span { text-decoration: underline; text-underline-offset: 4px; }
+  .cu__mail { color: var(--c-glass-hi); font-size: var(--fs-lead); }
+  .cu__mail span { overflow-wrap: anywhere; }
+  .cu__based { color: rgba(228, 242, 247, 0.82); }
+  .cu__ticks { margin-top: var(--sp-7); display: grid; gap: 0.5rem; color: rgba(228, 242, 247, 0.8); font-size: var(--fs-small); }
+  .cu__ticks li { display: flex; gap: 0.6rem; align-items: center; }
+  .cu__ticks li::before { content: ''; width: 8px; height: 8px; border-radius: 2px; background: var(--c-glass); flex: none; }
+
+  .qf { background: var(--c-paper); color: var(--c-ink); border-radius: var(--radius-lg); padding: clamp(1.25rem, 1rem + 1.5vw, 2.5rem); box-shadow: 0 40px 100px -40px rgba(0, 0, 0, 0.7); }
+  .qf__h { color: var(--c-purple); }
+  .qf__set { border: 0; padding: 0; margin: var(--sp-5) 0 0; }
+  .qf__legend { font-weight: 600; margin-bottom: var(--sp-3); }
+  .qf__opts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .qf__chip { position: relative; cursor: pointer; }
+  .qf__chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .qf__chip span { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0 1rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--c-line); font-weight: 500; transition: background-color var(--dur-1), color var(--dur-1), box-shadow var(--dur-1); }
+  .qf__chip span::before { content: ''; width: 16px; height: 16px; border-radius: 4px; box-shadow: inset 0 0 0 1.5px var(--c-ink-3); flex: none; }
+  .qf__chip input:checked + span { background: var(--c-purple); color: #fff; box-shadow: none; }
+  .qf__chip input:checked + span::before { box-shadow: none; background: var(--c-glass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 8.5 2.5 2.5L12 5.5' fill='none' stroke='%231b0a22' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat; }
+  .qf__chip input:focus-visible + span { outline: 2px solid var(--c-purple); outline-offset: 2px; }
+  .qf__grid { margin-top: var(--sp-5); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--sp-4); }
+  .qf__field { display: grid; gap: 0.35rem; font-size: var(--fs-small); font-weight: 600; }
+  .qf__field--wide { grid-column: 1 / -1; }
+  .qf__field input, .qf__field textarea { width: 100%; min-height: 48px; padding: 0.75rem 0.9rem; border: 0; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--c-line); font-weight: 400; font-size: 1rem; resize: vertical; }
+  .qf__field input:focus, .qf__field textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--c-purple); }
+  .qf__field input[aria-invalid='true'] { box-shadow: inset 0 0 0 2px #b3261e; }
+  .qf__err { margin-top: var(--sp-4); color: #b3261e; font-size: var(--fs-small); font-weight: 500; }
+  .qf__send { margin-top: var(--sp-5); width: 100%; }
+  .qf__note { margin-top: var(--sp-3); text-align: center; font-size: var(--fs-small); color: var(--c-ink-3); }
+  .qf__note a { color: var(--c-purple); font-weight: 600; }
+
+  .cc__in { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--sp-8); align-items: center; }
+  .cc__h { margin-top: var(--sp-4); color: var(--c-purple); }
+  .cc__txt { margin: var(--sp-5) 0 var(--sp-6); color: var(--c-ink-2); max-width: 44ch; }
+  .cc__certs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+  .cc__certs .ph-img { display: block; aspect-ratio: 1; padding: 8px; background: #fff; border-radius: 8px; box-shadow: 0 1px 0 var(--c-line), 0 24px 50px -30px rgba(71, 5, 87, 0.5); }
+  .cc__certs :global(img) { border-radius: 4px; }
+  @media (max-width: 899px) { .cu__in, .cc__in { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 599px) { .qf__grid, .cc__certs { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<script>
+  import { company } from '../data/site';
+  const form = document.querySelector<HTMLFormElement>('[data-quote-form]');
+  if (form) {
+    // ?service=<slug> pre-ticks the matching option
+    const pre = new URLSearchParams(location.search).get('service');
+    if (pre) form.querySelectorAll<HTMLInputElement>('input[name="service"]').forEach((i) => { if (i.dataset.slug === pre) i.checked = true; });
+    const err = form.querySelector('.qf__err') as HTMLElement;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = form.elements.namedItem('name') as HTMLInputElement;
+      const phone = form.elements.namedItem('phone') as HTMLInputElement;
+      const bad = [name, phone].filter((i) => !i.value.trim());
+      [name, phone].forEach((i) => i.setAttribute('aria-invalid', String(bad.includes(i))));
+      err.hidden = !bad.length;
+      if (bad.length) { bad[0].focus(); return; }
+      // No form backend yet: hand the enquiry to the visitor's email app (see delivery note).
+      const fd = new FormData(form);
+      const services = fd.getAll('service').join(', ') || 'Not specified';
+      const body = `Name: ${fd.get('name')}\nPhone: ${fd.get('phone')}\nEmail: ${fd.get('email') || '-'}\nServices: ${services}\n\n${fd.get('message') || ''}`;
+      location.href = `mailto:${company.email}?subject=${encodeURIComponent('Quote request – ' + services)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+</script>

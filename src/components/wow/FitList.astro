@@ -1,0 +1,32 @@
+---
+// Numbered 1–4 list shared by the wow candidates. Fixed layout; only its opacity animates.
+import { fitList } from '../../data/extra';
+import Icon from '../site/Icon.astro';
+---
+<ol class="fit" role="list" data-fit-list>
+  {fitList.map((f) => (
+    <li>
+      <a class="fit__row" href={f.href} data-key={f.key}>
+        <span class="fit__n">{f.n}</span>
+        <span class="fit__body">
+          <span class="fit__name">{f.name}</span>
+          <span class="fit__line">{f.line}</span>
+        </span>
+        <Icon name="arrow" class="fit__arrow" />
+      </a>
+    </li>
+  ))}
+</ol>
+<style>
+  .fit { display: grid; border-top: 1px solid var(--c-line-dark); }
+  .fit__row { position: relative; display: grid; grid-template-columns: 3rem minmax(0, 1fr) 24px; gap: var(--sp-4); align-items: start; padding: var(--sp-5) 0; border-bottom: 1px solid var(--c-line-dark); transition: background-color var(--dur-2); }
+  .fit__n { font: 500 0.875rem/2.1 var(--ff-mono); color: var(--c-glass); }
+  .fit__name { display: block; font: 800 var(--fs-display-3)/1.05 var(--ff-display); letter-spacing: -0.02em; color: #fff; transition: color var(--dur-2); }
+  .fit__line { display: block; margin-top: 0.4rem; font-size: var(--fs-small); color: rgba(228, 242, 247, 0.7); max-width: 46ch; }
+  .fit__row :global(.fit__arrow) { width: 24px; height: 24px; margin-top: 0.5rem; color: var(--c-glass); transition: transform var(--dur-2) var(--ease-out); }
+  .fit__row::before { content: ''; position: absolute; left: -12px; top: 0; bottom: 0; width: 3px; background: var(--c-glass); transform: scaleY(0); transition: transform var(--dur-2) var(--ease-out); }
+  .fit__row.is-on .fit__name, .fit__row:hover .fit__name, .fit__row:focus-visible .fit__name { color: var(--c-glass); }
+  .fit__row.is-on::before, .fit__row:hover::before { transform: scaleY(1); }
+  .fit__row.is-on :global(.fit__arrow), .fit__row:hover :global(.fit__arrow) { transform: translateX(4px); }
+  @media (max-width: 899px) { .fit__row { grid-template-columns: 2.25rem minmax(0, 1fr) 24px; gap: var(--sp-3); } .fit__row::before { left: -8px; } }
+</style>

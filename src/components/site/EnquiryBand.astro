@@ -1,0 +1,46 @@
+---
+// The one loud colour moment on every page: brand purple, the phone number set large.
+import { company, banner } from '../../data/site';
+import Icon from './Icon.astro';
+---
+<section class="eq" aria-labelledby="eq-h" data-cursor-theme="dark">
+  <div class="container eq__in">
+    <div class="eq__copy">
+      <p class="label">{banner.ticker[2]}</p>
+      <h2 id="eq-h" class="display h-2" data-reveal="lines"><span class="line"><span>{banner.ticker[1]}</span></span></h2>
+      <p class="eq__lead lead" data-reveal="fade">Get in touch with us today, and we will be happy to discuss your project requirements.</p>
+    </div>
+    <div class="eq__act" data-reveal="fade" data-delay="0.1">
+      <a class="eq__phone" href={company.phoneHref}><Icon name="phone" /><span>{company.phone}</span></a>
+      <div class="btn-row">
+        <a class="btn" href={company.phoneHref} data-magnetic>Call The Team</a>
+        <a class="btn btn--ghost" href="/contact-us">Free quote <Icon name="arrow" /></a>
+      </div>
+      <a class="eq__mail" href={`mailto:${company.email}`}><Icon name="mail" />{company.email}</a>
+    </div>
+  </div>
+  <div class="eq__bars" aria-hidden="true"></div>
+</section>
+<style>
+  .eq { position: relative; overflow: hidden; background: var(--c-purple); color: #fff; padding-block: var(--section-y); isolation: isolate; }
+  .eq .label { color: var(--c-glass); }
+  .eq__in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--sp-7); align-items: end; }
+  .eq h2 { margin-top: var(--sp-4); color: #fff; }
+  .eq__lead { margin-top: var(--sp-5); color: rgba(255, 255, 255, 0.85); max-width: 40ch; }
+  .eq__act { display: grid; gap: var(--sp-5); justify-items: start; }
+  .eq__phone { display: inline-flex; align-items: center; gap: 0.35em; font: 800 var(--fs-display-2)/1 var(--ff-display); letter-spacing: -0.03em; color: #fff; white-space: nowrap; }
+  .eq__phone :global(svg) { width: 0.7em; height: 0.7em; color: var(--c-glass); }
+  .eq__phone:hover span { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+  .eq__mail { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--c-glass); overflow-wrap: anywhere; }
+  .eq__mail :global(svg) { width: 18px; height: 18px; flex: none; }
+  /* glazing-bar grid as a quiet texture: the window motif, not a logo watermark */
+  .eq__bars { position: absolute; inset: 0; z-index: -1; opacity: 0.12; background:
+    linear-gradient(90deg, transparent calc(50% - 6px), #fff calc(50% - 6px), #fff calc(50% + 6px), transparent calc(50% + 6px)),
+    linear-gradient(0deg, transparent calc(50% - 6px), #fff calc(50% - 6px), #fff calc(50% + 6px), transparent calc(50% + 6px));
+    background-size: 360px 360px; background-position: right -60px center; mask-image: linear-gradient(90deg, transparent 35%, #000); }
+  .eq .btn { --bg: var(--c-glass); --fg: var(--c-stage); }
+  .eq .btn:hover { --bg: #fff; }
+  .eq .btn--ghost { --bg: transparent; --fg: #fff; }
+  .eq .btn--ghost:hover { --bg: rgba(255, 255, 255, 0.1); }
+  @media (max-width: 899px) { .eq__in { grid-template-columns: minmax(0, 1fr); } }
+</style>

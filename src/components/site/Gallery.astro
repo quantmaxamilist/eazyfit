@@ -1,0 +1,91 @@
+---
+// Photo grid + lightbox. Small masters (500px) stay in grid cells at their native size or below.
+import type { Pic } from '../../data/extra';
+import { size } from '../../data/extra';
+import Img from './Img.astro';
+import Icon from './Icon.astro';
+interface Props { pics: Pic[]; id: string; columns?: 3 | 4 }
+const { pics, id, columns = 4 } = Astro.props;
+---
+<div class={`gal gal--${columns}`} data-gallery={id}>
+  <ul class="gal__grid" role="list">
+    {pics.map((p, i) => {
+      const [w, h] = size(p.image);
+      return (
+        <li data-reveal="fade" data-delay={String((i % columns) * 0.05)}>
+          <button class="gal__item" type="button" data-index={i} data-src={`/images/${p.image}.jpg`} data-w={w} data-h={h} data-cursor="view" aria-label={`Open photo ${i + 1} of ${pics.length}: ${p.alt}`}>
+            <span class="ph-img"><Img image={p.image} alt={p.alt} sizes="(max-width: 767px) 50vw, 25vw" /></span>
+          </button>
+        </li>
+      );
+    })}
+  </ul>
+  <dialog class="lb" aria-label="Photo viewer">
+    <div class="lb__bar">
+      <span class="lb__count" aria-live="polite"></span>
+      <button class="lb__btn" type="button" data-lb-close aria-label="Close"><Icon name="close" /></button>
+    </div>
+    <figure class="lb__fig"><img class="lb__img" alt="" /><figcaption class="lb__cap"></figcaption></figure>
+    <button class="lb__btn lb__prev" type="button" data-lb-prev aria-label="Previous photo"><Icon name="chev" /></button>
+    <button class="lb__btn lb__next" type="button" data-lb-next aria-label="Next photo"><Icon name="chev" /></button>
+  </dialog>
+</div>
+<style>
+  .gal__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); }
+  .gal--3 .gal__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gal__item { display: block; width: 100%; padding: 6px; background: var(--c-frame); border-radius: 6px; box-shadow: 0 1px 0 var(--c-line), 0 12px 30px -18px rgba(27, 14, 32, 0.45); transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out); }
+  .gal__item .ph-img { display: block; aspect-ratio: 1; border-radius: 2px; }
+  .gal__item :global(img) { transition: transform 0.6s var(--ease-out); }
+  .gal__item:hover { transform: translateY(-3px); box-shadow: 0 1px 0 var(--c-line), 0 22px 40px -20px rgba(71, 5, 87, 0.5); }
+  .gal__item:hover :global(img) { transform: scale(1.04); }
+  @media (max-width: 899px) { .gal__grid, .gal--3 .gal__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  .lb { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; padding: 0; border: 0; background: rgba(15, 5, 19, 0.96); color: #fff; z-index: var(--z-lightbox); }
+  .lb[open] { display: grid; grid-template-rows: auto 1fr; }
+  .lb::backdrop { background: transparent; }
+  .lb__bar { display: flex; justify-content: space-between; align-items: center; padding: 14px var(--gutter); font: 500 0.8125rem var(--ff-mono); letter-spacing: 0.08em; }
+  .lb__fig { display: grid; place-items: center; align-content: center; gap: 12px; padding: 0 clamp(16px, 8vw, 120px) 24px; min-height: 0; }
+  .lb__img { max-width: 100%; max-height: calc(100vh - 140px); width: auto; height: auto; object-fit: contain; border: 6px solid #fff; border-radius: 4px; }
+  .lb__cap { font-size: var(--fs-small); color: rgba(228, 242, 247, 0.75); text-align: center; }
+  .lb__btn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.08); color: #fff; }
+  .lb__btn:hover { background: rgba(255, 255, 255, 0.18); }
+  .lb__btn :global(svg) { width: 22px; height: 22px; }
+  .lb__prev, .lb__next { position: absolute; top: 50%; transform: translateY(-50%); }
+  .lb__prev { left: 12px; } .lb__prev :global(svg) { transform: scaleX(-1); }
+  .lb__next { right: 12px; }
+  @media (max-width: 767px) { .lb__prev, .lb__next { top: auto; bottom: 16px; transform: none; } .lb__fig { padding-inline: 12px; padding-bottom: 80px; } }
+</style>
+<script>
+  import { lenis } from '../../scripts/core.js';
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const dlg = root.querySelector('dialog') as HTMLDialogElement | null;
+    const items = [...root.querySelectorAll<HTMLButtonElement>('.gal__item')];
+    if (!dlg || !items.length) return;
+    const img = dlg.querySelector('.lb__img') as HTMLImageElement;
+    const cap = dlg.querySelector('.lb__cap') as HTMLElement;
+    const count = dlg.querySelector('.lb__count') as HTMLElement;
+    let i = 0;
+    let opener: HTMLElement | null = null;
+    const show = (n: number) => {
+      i = (n + items.length) % items.length;
+      const b = items[i];
+      const alt = b.querySelector('img')?.getAttribute('alt') || '';
+      img.src = b.dataset.src!; img.width = +b.dataset.w!; img.height = +b.dataset.h!; img.alt = alt;
+      cap.textContent = alt;
+      count.textContent = `Photo ${i + 1} of ${items.length}`;
+    };
+    // The browser pane may never fire `close`, so every close path resumes Lenis itself.
+    const close = () => { if (dlg.open) dlg.close(); lenis?.start(); document.body.style.overflow = ''; opener?.focus(); };
+    items.forEach((b, n) => b.addEventListener('click', () => { opener = b; show(n); dlg.showModal(); lenis?.stop(); document.body.style.overflow = 'hidden'; }));
+    dlg.querySelector('[data-lb-close]')?.addEventListener('click', close);
+    dlg.querySelector('[data-lb-prev]')?.addEventListener('click', () => show(i - 1));
+    dlg.querySelector('[data-lb-next]')?.addEventListener('click', () => show(i + 1));
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+    dlg.addEventListener('close', () => { lenis?.start(); document.body.style.overflow = ''; });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg || (e.target as HTMLElement).classList.contains('lb__fig')) close(); });
+    dlg.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(i - 1); if (e.key === 'ArrowRight') show(i + 1); });
+    let sx = 0;
+    dlg.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
+    dlg.addEventListener('touchend', (e) => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1)); });
+  });
+</script>
